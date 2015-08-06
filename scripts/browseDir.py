@@ -24,15 +24,18 @@
 import nuke
 import sys
 import os
+import subprocess
 
 def launch(directory):
 	# Open folder
 	print('Attempting to open folder: ' + directory)
 	if os.path.exists( directory ):
-		if(sys.platform == 'win32'):
-			os.system('start "' + directory + '"')
-		elif(sys.platform == 'darwin'):
-			os.system('open "' + directory + '"')
+	        if sys.platform == 'darwin':
+	            subprocess.check_call(['open', '--', directory])
+	        elif sys.platform == 'linux2':
+	            subprocess.check_call(['gnome-open', '--', directory])
+	        elif sys.platform == 'win32':
+	            os.startfile(directory)
 	else:
 		nuke.message('Path does not exist:\n' + directory)
 
